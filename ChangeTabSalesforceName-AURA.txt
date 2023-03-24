@@ -1,0 +1,13 @@
+<lightning:workspaceAPI aura:id="workspace" />
+
+          var workspaceAPI = component.find("workspace");
+          workspaceAPI.getFocusedTabInfo().then(function(response) {
+              var focusedTabId = response.tabId;
+              workspaceAPI.setTabLabel({
+                  tabId: focusedTabId,
+                  label: labelName
+              });
+          })
+          .catch(function(error) {
+              console.log(error);
+          });

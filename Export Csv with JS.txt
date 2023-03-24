@@ -1,0 +1,48 @@
+dataBackup = lista dos dados
+columnsHeader = colunas
+columnsKey = nome do campo para a coluna na lista dos dados (fieldName)
+
+
+exportToCSV() {
+    var jsonRecordsData = JSON.parse(JSON.stringify(this.dataBackup));
+    if (!jsonRecordsData) {
+        const event = new ShowToastEvent({
+            title: 'ERROR!',
+            variant : 'error',
+            message: 'error'
+        });
+        this.dispatchEvent(event);
+    }
+    else {
+        let columnHeader = JSON.parse(JSON.stringify(this.columnsHeader));  // This array holds the Column headers to be displayd
+        let jsonKeys = JSON.parse(JSON.stringify(this.columnsKey)); // This array holds the keys in the json data
+        let csvIterativeData;
+        let csvSeperator;
+        let newLineCharacter;
+        csvIterativeData = "";
+        csvSeperator = ",";
+        newLineCharacter = "\n";
+        csvIterativeData += columnHeader.join(csvSeperator);
+        csvIterativeData += newLineCharacter;
+        for (let i = 0; i < jsonRecordsData.length; i++) {
+            let counter = 0;
+            for (let iteratorObj in jsonKeys) {
+                let dataKey = jsonKeys[iteratorObj];
+                if (counter > 0) {  
+                    csvIterativeData += csvSeperator;
+                }
+
+                if (jsonRecordsData[i][dataKey] !== null && jsonRecordsData[i][dataKey] !== undefined) {  
+                    csvIterativeData += '"' + jsonRecordsData[i][dataKey] + '"';
+                } 
+                else {  
+                    csvIterativeData += '""';
+                }
+                counter++;
+            }
+            csvIterativeData += newLineCharacter;
+        }
+        this.hrefdata = "data:text/csv;charset=utf-8," + encodeURI(csvIterativeData);
+
+    }
+}

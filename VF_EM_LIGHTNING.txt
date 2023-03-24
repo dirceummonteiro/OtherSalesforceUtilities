@@ -1,0 +1,2 @@
+showHeader="false" lightningStylesheets="true" standardStylesheets="true"
+sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
